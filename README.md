@@ -84,6 +84,7 @@ JDBC URL: jdbc:h2:mem:fraud_db
 Query: SELECT * FROM RISK_RESULT ORDER BY processed_at DESC;
 ```
 
-🛡️ License
+## 🛡️ License
+
 This project is licensed under the MIT License.
 
