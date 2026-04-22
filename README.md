@@ -2,7 +2,7 @@
 
 # Sentinel Core 🛡️
 
-Sentinel is a high-performance, event-driven fraud detection engine built with **Spring Boot**, **Kafka Streams**, and **H2**. It processes financial transactions in real-time using a weighted scoring model to identify and block suspicious activity.
+Sentinel Core is a high-performance, event-driven fraud detection engine built with **Spring Boot**, **Kafka Streams**, and **H2**. It processes financial transactions in real-time using a weighted scoring model to identify and block suspicious activity.
 
 ## 🚀 Key Features
 - **Modern Java Stack**: Optimized for **Java 25**, leveraging the latest JVM performance enhancements.
