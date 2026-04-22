@@ -5,21 +5,15 @@
 Sentinel is a high-performance, event-driven fraud detection engine built with **Spring Boot**, **Kafka Streams**, and **H2**. It processes financial transactions in real-time using a weighted scoring model to identify and block suspicious activity.
 
 ## 🚀 Key Features
-- **Real-Time Stream Processing**: Uses Kafka Streams to evaluate transactions with sub-second latency.
-- **Dynamic Blacklisting**: Utilizes a `GlobalKTable` to sync blacklisted users across all engine instances instantly.
-- **Weighted Rule Engine**: A modular rule pattern that allows for easy addition of new fraud detection logic.
-- **Audit Logging**: Every decision (Score, Reason, Action) is persisted to an H2 database and broadcast back to a dedicated Kafka topic.
+- **Modern Java Stack**: Optimized for **Java 25**, leveraging the latest JVM performance enhancements.
+- **Stream Processing**: Sub-second fraud evaluation via Kafka Streams.
+- **Global State Store**: Real-time user blacklisting using `GlobalKTable` synchronized across all nodes.
+- **Asynchronous Audit**: Decisions are saved to H2 and broadcast to a `fraud-decisions` topic without blocking the transaction flow.
 
 ## 🛠️ Architecture
-The system follows a decoupled, reactive flow:
-1. **Ingress**: Transactions are injected via a REST API into the `inbound-transactions` Kafka topic.
-2. **Analysis**: The `ScoringEngine` processes the stream, checking against the `GlobalKTable` state store.
-3. **Decisioning**: Results are routed based on scores:
-   - `< 40**: **APPROVE**
-   - `40 - 79**: **REVIEW**
-   - `≥ 80**: **REJECT**
-4. **Egress**: Decisions are sent to the `fraud-decisions` topic and saved to the database.
-
+1. **Producer**: Transactions enter via REST -> Kafka `inbound-transactions`.
+2. **Processor**: `ScoringEngine` runs rules (Blacklist, High Amount, etc.).
+3. **Sink**: Results are persisted to H2 and sent to a decision topic.
 ## ⚙️ Configuration & Security
 This project is configured for **SSL-secured Kafka** (e.g., Aiven, Confluent). For security, sensitive credentials must be externalized using environment variables.
 
