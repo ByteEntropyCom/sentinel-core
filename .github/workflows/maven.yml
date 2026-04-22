@@ -5,6 +5,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  # This line enables the manual "Run Workflow" button in GitHub Actions
+  workflow_dispatch:
 
 jobs:
   build:
@@ -21,6 +23,6 @@ jobs:
         cache: maven
 
     - name: Build with Maven
-      # We skip tests here if they require a live Kafka connection
-      # Or use 'mvn test' if you have Mockito/TopologyTestDriver tests
+      # We use -DskipTests because CI environment won't have your 
+      # Aiven SSL certificates or a live Kafka cluster connection.
       run: mvn -B package --file pom.xml -DskipTests
