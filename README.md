@@ -60,7 +60,7 @@ curl -X POST "http://localhost:8081/test/blacklist/add?userId=MALICIOUS_USER"
 
 4. Trigger the Fraud Rule
 
-Bash
+```bash
 curl -X POST http://localhost:8081/test/inject \
 -H "Content-Type: application/json" \
 -d '{
@@ -73,6 +73,7 @@ curl -X POST http://localhost:8081/test/inject \
 Expected Result: REJECT (Score: 100, Reason: Global User Blacklist)
 
 ## 📊 Audit Trail
+
 You can inspect the decision history via the built-in H2 Console:
 
 ```
