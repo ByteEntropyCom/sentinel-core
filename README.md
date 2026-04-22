@@ -46,7 +46,9 @@ curl -X POST http://localhost:8081/test/inject \
   "transactionId": "tx-101",
   "userId": "user_demo",
   "amount": 250.00,
-  "currency": "USD"
+  "currency": "USD",
+  "ipAddress": "1.1.1.1",
+  "timestamp": 1713772800
 }'
 ```
 
@@ -66,7 +68,9 @@ curl -X POST http://localhost:8081/test/inject \
 -d '{
   "transactionId": "tx-102",
   "userId": "MALICIOUS_USER",
-  "amount": 10.00
+  "amount": 10.00,
+  "ipAddress": "1.1.1.1",
+  "timestamp": 1713772800
 }'
 ```
 
