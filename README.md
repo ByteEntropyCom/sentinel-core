@@ -56,6 +56,8 @@ Expected Result: APPROVE (Score: 0)
 
 ```bash
 curl -X POST "http://localhost:8081/test/blacklist/add?userId=MALICIOUS_USER"
+```
+
 4. Trigger the Fraud Rule
 
 Bash
