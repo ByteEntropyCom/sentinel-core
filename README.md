@@ -1,1 +1,37 @@
-# sentinel-core
+# Sentinel Core 🛡️
+
+Sentinel is a high-performance, event-driven fraud detection engine built with **Spring Boot**, **Kafka Streams**, and **H2**. It processes financial transactions in real-time using a weighted scoring model to identify and block suspicious activity.
+
+## 🚀 Key Features
+- **Real-Time Stream Processing**: Uses Kafka Streams to evaluate transactions with sub-second latency.
+- **Dynamic Blacklisting**: Utilizes a `GlobalKTable` to sync blacklisted users across all engine instances instantly.
+- **Weighted Rule Engine**: A modular rule pattern that allows for easy addition of new fraud detection logic.
+- **Audit Logging**: Every decision (Score, Reason, Action) is persisted to an H2 database and broadcast back to a dedicated Kafka topic.
+
+## 🛠️ Architecture
+The system follows a decoupled, reactive flow:
+1. **Ingress**: Transactions are injected via a REST API into the `inbound-transactions` Kafka topic.
+2. **Analysis**: The `ScoringEngine` processes the stream, checking against the `GlobalKTable` state store.
+3. **Decisioning**: Results are routed based on scores:
+   - `< 40**: **APPROVE**
+   - `40 - 79**: **REVIEW**
+   - `≥ 80**: **REJECT**
+4. **Egress**: Decisions are sent to the `fraud-decisions` topic and saved to the database.
+
+## ⚙️ Configuration & Security
+This project is configured for **SSL-secured Kafka** (e.g., Aiven, Confluent). For security, sensitive credentials must be externalized using environment variables.
+
+### Environment Variables Required:
+| Variable | Description |
+| :--- | :--- |
+| `KAFKA_BOOTSTRAP_SERVERS` | Your Kafka Broker URL |
+| `SSL_TRUSTSTORE_LOCATION` | Absolute path to your `.jks` or `.p12` truststore |
+| `SSL_KEYSTORE_LOCATION` | Absolute path to your keystore |
+| `SSL_PASSWORD` | Password for your SSL certificates |
+
+## 🧪 Quick Start & Testing
+
+### 1. Start the Application
+Ensure your Kafka cluster is running and your environment variables are set, then run:
+```bash
+mvn spring-boot:run
